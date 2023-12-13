@@ -126,7 +126,6 @@ public class Factura extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jpVenta.setBackground(new java.awt.Color(0, 204, 204));
-        jpVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lbltitulo.setBackground(new java.awt.Color(0, 204, 204));
         lbltitulo.setFont(new java.awt.Font("Segoe UI Semibold", 3, 24)); // NOI18N
@@ -146,6 +145,7 @@ public class Factura extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Tipo De Pago:");
 
+        cbxtipodepago.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         cbxtipodepago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar:", "Tarjeta de Credito", "Efectivo" }));
 
         txtUsuario.setEditable(false);
@@ -246,7 +246,7 @@ public class Factura extends javax.swing.JFrame {
                         .addGroup(jpVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jpVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

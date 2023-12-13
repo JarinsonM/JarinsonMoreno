@@ -391,7 +391,7 @@ public class ControladorPrincipal implements ActionListener, ChangeListener, Doc
             tableproducto.setLocationRelativeTo(null);
             detallefactu.setVisible(false);
             prin.setVisible(false);
-            modproduc.mostrarTablaProducto(tableproducto.getJtproducto(), "", "");
+            modproduc.mostrarTablaProducto(tableproducto.getJtproducto(), "", "producto");
 
             tableproducto.addWindowListener(new WindowAdapter() {
                 ;

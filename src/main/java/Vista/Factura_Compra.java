@@ -139,7 +139,7 @@ public class Factura_Compra extends javax.swing.JFrame {
 
         jpFacturaCompra.setBackground(new java.awt.Color(0, 204, 204));
 
-        lblTitulo.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Semibold", 3, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("NUEVA FACTURA");
 

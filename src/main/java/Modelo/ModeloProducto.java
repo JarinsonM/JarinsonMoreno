@@ -158,10 +158,21 @@ public class ModeloProducto {
         editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png")));
         eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png")));
         agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregar-producto.png")));
-
-        String[] titulo = NomPesta.equals("Producto") ? new String[]{"codigo", "Imagen", "producto",
-            "Descripcion", "existencia", "Precio"} : new String[]{"codigo", "imagen",
-            "producto", "descripcion", "cantidad", "valor"};
+        String[] titulo;
+        switch (NomPesta) {
+            case "Producto":
+                titulo = new String[]{"Código", "Imagen", "Nombre del Producto", "Descripción", "Existencia", "Precio"};
+                break;
+            case "producto":
+                titulo = new String[]{"Código", "Imagen", "Nombre del Producto", "Descripción", "Cantidad", "Valor"};
+                break;
+            default:
+                titulo = new String[]{"Código", "Imagen", "Nombre del Producto", "Descripción", "Cantidad", "Descuento"};
+                break;
+        }
+//////        String[] titulo = NomPesta.equals("Producto") ? new String[]{"codigo", "Imagen", "producto",
+//            "Descripcion", "existencia", "Precio"} : new String[]{"codigo", "imagen",
+//            "producto", "descripcion", "cantidad", "valor"};
         int total = titulo.length;
 
         if (NomPesta.equals("Producto")) {
@@ -187,72 +198,71 @@ public class ModeloProducto {
             }
         };
 
-            String sqlproducto = valor.isEmpty() ? "select * from mostrar_producto" : "call Filtro_Producto('" + valor + "')";
+        String sqlproducto = valor.isEmpty() ? "select * from mostrar_producto" : "call Filtro_Producto('" + valor + "')";
 
-            
-                try {
+        try {
             Object dato[] = new Object[total];
 
-                Statement st = conex.createStatement();
-                ResultSet rs = st.executeQuery(sqlproducto);
-                while (rs.next()) {
-                    try {
-                        byte[] imag = rs.getBytes(5);
-                        BufferedImage bfimage = null;
-                        InputStream inStr = new ByteArrayInputStream(imag);
+            Statement st = conex.createStatement();
+            ResultSet rs = st.executeQuery(sqlproducto);
+            while (rs.next()) {
+                try {
+                    byte[] imag = rs.getBytes(5);
+                    BufferedImage bfimage = null;
+                    InputStream inStr = new ByteArrayInputStream(imag);
 
-                        bfimage = ImageIO.read(inStr);
+                    bfimage = ImageIO.read(inStr);
 
-                        ImageIcon imagen = new ImageIcon(bfimage.getScaledInstance(64, 64, 0));
-                        dato[1] = new JLabel(imagen);
-                    } catch (Exception e) {
-                        dato[1] = new JLabel("No Image");
-                    }
-
-                    dato[0] = rs.getString(1);
-                    dato[2] = rs.getString(2);
-                    dato[3] = rs.getString(3);
-                    dato[4] = rs.getString(4);
-                    dato[5] = rs.getString(6);
-
-                    Object[] fila = {dato[0], dato[1], dato[2], dato[3], dato[4], dato[5]};
-                    if (NomPesta.equals("Producto")) {
-                        fila = Arrays.copyOf(fila, fila.length + 2);
-                        fila[fila.length - 2] = editar;
-                        fila[fila.length - 1] = eliminar;
-                    } else {
-                        fila = Arrays.copyOf(fila, fila.length + 1);
-                        fila[fila.length - 1] = agregar;
-                    }
-                    tablaProducto.addRow(fila);
+                    ImageIcon imagen = new ImageIcon(bfimage.getScaledInstance(64, 64, 0));
+                    dato[1] = new JLabel(imagen);
+                } catch (Exception e) {
+                    dato[1] = new JLabel("No Image");
                 }
-                conex.close();
 
+                dato[0] = rs.getString(1);
+                dato[2] = rs.getString(2);
+                dato[3] = rs.getString(3);
+                dato[4] = rs.getString(4);
+                dato[5] = rs.getString(6);
+
+                Object[] fila = {dato[0], dato[1], dato[2], dato[3], dato[4], dato[5]};
+                if (NomPesta.equals("Producto")) {
+                    fila = Arrays.copyOf(fila, fila.length + 2);
+                    fila[fila.length - 2] = editar;
+                    fila[fila.length - 1] = eliminar;
+                } else {
+                    fila = Arrays.copyOf(fila, fila.length + 1);
+                    fila[fila.length - 1] = agregar;
+                }
+                tablaProducto.addRow(fila);
             }
-            catch (SQLException ex
+            conex.close();
 
-            
-                ) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-            }
-
-            tabla.setModel (tablaProducto);
-
-            int numColumnas = tabla.getColumnCount();
-            int[] tamanos = {100, 100, 100, 100, 100, 100, 50, 80};
-            for (int i = 0;
-            i< numColumnas ;
-            i
-
-            
-                ++) {
-            TableColumn columna = tabla.getColumnModel().getColumn(i);
-                columna.setPreferredWidth(tamanos[i]);
-            }
-
-            cn.cerrarConexion ();
-
         }
+
+        tabla.setModel(tablaProducto);
+
+        int numColumnas = tabla.getColumnCount();
+
+        //Renderizar la columna para que muestre el checkbox
+        if (NomPesta.equals("Produ")) {
+            int col = numColumnas - 1; //podemos borrarla y colocar el numero de columna que correponde a la pestaña
+            TableColumn tc = tabla.getColumnModel().getColumn(col);
+            tc.setCellEditor(tabla.getDefaultEditor(Boolean.class));
+            tc.setCellRenderer(tabla.getDefaultRenderer(Boolean.class));//si da click aparezca el chulo
+        }
+        
+        int[] tamanos = {100, 100, 100, 100, 100, 100, 50, 80};
+        for (int i = 0;i < numColumnas;i++) {
+            TableColumn columna = tabla.getColumnModel().getColumn(i);
+            columna.setPreferredWidth(tamanos[i]);
+        }
+
+        cn.cerrarConexion();
+
+    }
 
     public void buscarProducto(int valor) {
         Conexion cone = new Conexion();
@@ -318,6 +328,7 @@ public class ModeloProducto {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
 }

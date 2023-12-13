@@ -64,9 +64,9 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(0, 204, 204));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         JPPrincipal.setBackground(new java.awt.Color(0, 204, 204));
+        JPPrincipal.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
 
         JPUsuario.setBackground(new java.awt.Color(0, 204, 204));
 

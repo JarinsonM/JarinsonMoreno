@@ -3,6 +3,7 @@ package Controlador;
 import Modelo.ModeloFactura_Compra;
 import Modelo.ModeloProveedor;
 import Modelo.ModeloUsuario;
+import Vista.Agregar_Detalle_Factura;
 import Vista.Mostra_Detalle_Factura_Compra;
 import Vista.Factura_Compra;
 import Vista.Principal;
@@ -30,7 +31,8 @@ public class ControladorFactura_Compra implements ActionListener, DocumentListen
     Buscar_proveedor Proveedor_Table = new Buscar_proveedor();
     ModeloFactura_Compra modfactucomp = new ModeloFactura_Compra();
     Mostra_Detalle_Factura_Compra detallefactura = new Mostra_Detalle_Factura_Compra();
-
+    Agregar_Detalle_Factura agregardetallefactura = new Agregar_Detalle_Factura();
+            
     public ControladorFactura_Compra() {
         vista_factucomp.getBtnBuscarProveedor().addActionListener(this);
         vista_factucomp.getBtnBuscarUsuario().addActionListener(this);
@@ -41,7 +43,9 @@ public class ControladorFactura_Compra implements ActionListener, DocumentListen
         Proveedor_Table.getTxtFiltro().getDocument().addDocumentListener(this);
         User_Table.getTxtFiltro().getDocument().addDocumentListener(this);
         vista_factucomp.getBtnCancelar().addActionListener(this);
-
+        agregardetallefactura.getBtnBuscarProducto().addActionListener(this);
+        agregardetallefactura.getBtnagregardetallefactura().addActionListener(this);
+        
         vista_factucomp.addWindowListener(new WindowAdapter() {
             ;
         public void windowClosed(WindowEvent e) {
@@ -163,6 +167,7 @@ public class ControladorFactura_Compra implements ActionListener, DocumentListen
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(vista_factucomp.getBtnBuscarUsuario())) {
+            
             vista_factucomp.setVisible(false);
             User_Table.setLocationRelativeTo(null);
             modusu.mostrarTablaUsuario(User_Table.getJtUsuario(), "", "BuscarUsuario");
